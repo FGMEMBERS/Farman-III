@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Farman III (19010-1912) LesterBoffo
+     
+     wingspan     : 10.50 m         (54.13 ft)
+     length       : 12.67 m         (38.28 ft)
+     Empty weight : 460 kg          (840 lb)
+     Engine       : 1 x Gnome 50 cv 
+     Speed        : 57 km/h         (35 kts)
+--><!--
+Buck notes;
+
+Original FDM:
+
+Solution results:       Iterations: 500
+ Drag Coefficient: 93.072502
+       Lift Ratio: 42.996353
+       Cruise AoA: 0.813669
+   Tail Incidence: -5.509126
+Approach Elevator: -0.305711
+               CG: x:0.404, y:0.000, z:-0.012
+
+  Inertia tensor : 1695.090, -0.000, 647.312
+        [kg*m^2]   -0.000, 3417.355, 0.000
+     Origo at CG   647.312, 0.000, 4275.522
+
+These numbers are pretty wacky, indicating an extremely over-powered situation. I've never seen drag coefficient exceed lift ratio before.
+
+This FDM:
+
+Solution results:       Iterations: 300
+ Drag Coefficient: 29.740862
+       Lift Ratio: 42.234680
+       Cruise AoA: 0.121599
+   Tail Incidence: -3.696834
+Approach Elevator: -0.352352
+               CG: x:0.450, y:-0.000, z:-0.061
+
+  Inertia tensor : 1595.458, -0.000, 702.058
+        [kg*m^2]   -0.000, 3515.780, 0.000
+     Origo at CG   702.058, 0.000, 4256.181
+
+More reasonable. It has a lot of elevator authority, but then the real think probably did as well.
+--><airplane mass="840"><!--
+Buck notes;
+Slight decrease in approach AoA yields better solver results.
+--><approach speed="24" aoa="4"><control-setting axis="/controls/engines/engine[0]/throttle" value="0.35"/><control-setting axis="/controls/engines/engine[0]/mixture" value="1.0"/></approach><cruise speed="42" alt="0"><control-setting axis="/controls/engines/engine[0]/throttle" value="1"/><control-setting axis="/controls/engines/engine[0]/mixture" value="1"/><control-setting axis="/controls/flight/elevator-trim" value="0.1"/></cruise><cockpit x="2.092" y="0" z="0.630"/><!--
+Buck notes;
+I greatly increased the signficance of these drag bodies by changing width from 0.01 to 0.5. The original values just don't give much significance to all the open structures, wires, pilot, etc.
+--><fuselage ax="-0.158" ay="-1.23" az="-0.159" bx="-5.0" by="-1.02" bz="-0.109" width="0.5" taper="1" midpoint="0.5"/><fuselage ax="-0.158" ay="1.23" az="-0.159" bx="-5.0" by="1.02" bz="-0.109" width="0.5" taper="1" midpoint="0.5"/><fuselage ax="-0.158" ay="-1.23" az="1.33" bx="-5.0" by="-1.02" bz="1.089" width="0.5" taper="1" midpoint="0.5"/><fuselage ax="-0.158" ay="1.23" az="1.33" bx="-5.0" by="1.02" bz="1.089" width="0.5" taper="1" midpoint="0.5"/><!--
+Buck notes;
+Increased camber. Based on diagrams of the plane, the original value of 0.05 seems a bit too symmetrical.
+Decreased stall AoA and reduced stall peak slightly to reflect an early, less efficient airfoil. The plane will stall around 11 degrees AoA. stalls are abrupt, but wing drop is actually not that bad with these settings.
+Added an effectiveness attribute for all surfaces. Effectiveness is a misnomer for a value that actually increases the non-induced drag of a surface. I rarely use it, but given the crude wings and all the rigging, this seems reasonable here.
+Elevator authority, CG, approach AoA etc. all configured to allow it to be brought barely to a full power stall. In some power-off situations it may not stall but will float downwards instead, which may not be wrong. It will stall easily in sharp turns though.
+--><wing x="0.30" y="0.000" z="1.409" chord="1.769" length="4.67" incidence="1.0" taper="1.0" effectiveness="2" camber="0.075"><stall aoa="12" width="4" peak="1.4"/><flap0 start="0.70" end="1.0" lift="1.5" drag="1.4"/><control-input axis="/controls/flight/aileron" control="FLAP0" split="true"/><control-input axis="/controls/flight/aileron-trim" control="FLAP0" split="true"/><control-output control="FLAP0" side="left" prop="/surface-positions/left-aileron-pos-norm"/><control-output control="FLAP0" side="right" prop="/surface-positions/right-aileron-pos-norm"/></wing><mstab x="0.30" y="0.000" z="-0.22" chord="1.769" length="4.76" incidence="1.0" taper="1.0" effectiveness="2" camber="0.075"><stall aoa="12" width="4" peak="1.4"/></mstab><hstab x="-5.581" y="0.000" z="1.15" chord="1.7" length="1.29" incidence="0.84" taper="1.0" effectiveness="2" camber="0.035"><stall aoa="16" width="4" peak="1.5"/><flap0 start="0" end="1" lift="1.4" drag="1.2"/><control-input axis="/controls/flight/elevator" control="FLAP0"/><control-input axis="/controls/flight/elevator-trim" control="FLAP0"/><control-output control="FLAP0" prop="/surface-positions/elevator-pos-norm"/></hstab><mstab x="-5.581" y="0.000" z="-0.14" chord="1.7" length="1.29" incidence="0.84" taper="1.0" effectiveness="2" camber="0.035"><stall aoa="16" width="4" peak="1.5"/></mstab><mstab x="3.681" y="0.000" z="0.354" chord="0.902" length="2.030" incidence="0.0" taper="1.0" effectiveness="2" camber="-0.015"><stall aoa="16" width="4" peak="1.5"/><flap0 start="0" end="1" lift="1.55" drag="1.2"/><control-input axis="/controls/flight/elevator" control="FLAP0" invert="true"/><control-input axis="/controls/flight/elevator-trim" control="FLAP0" invert="true"/><control-output control="FLAP0" prop="/surface-positions/elevator-pos-norm" min="1.15" max="-1.12"/></mstab><vstab x="-6.291" y="1.07" z="0.36" chord="0.94" length="1.190" effectiveness="2" taper="0.80"><stall aoa="14" width="4" peak="1.5"/><flap0 start="0" end="1" lift="1.5" drag="1.2"/><control-input axis="/controls/flight/rudder" control="FLAP0" invert="true"/><control-input axis="/controls/flight/rudder-trim" control="FLAP0" invert="true"/><control-output control="FLAP0" prop="/surface-positions/rudder-pos-norm" min="1" max="-1"/></vstab><vstab x="-6.291" y="-1.07" z="0.36" chord="0.94" length="1.190" effectiveness="2" taper="0.80"><stall aoa="14" width="4" peak="1.5"/><flap0 start="0" end="1" lift="1.5" drag="1.2"/><control-input axis="/controls/flight/rudder" control="FLAP0" invert="true"/><control-input axis="/controls/flight/rudder-trim" control="FLAP0" invert="true"/><control-output control="FLAP0" prop="/surface-positions/rudder-pos-norm" min="1" max="-1"/></vstab><!--
+Buck notes;
+Moment might be a bit high, but I don't know the prop assembly weight so I left it alone.
+I greatly reduced engine power. The original configuration was massively over-powered by YASim standards. The engine rating may be 50 HP, but the likely prop-engine output is not going to be like a modern engine, which YASim assumes. By considerably reducing power, I get a better solution and a flight that feels more realistic rather than over-powered. It likely needs tweaking by someone more familiar with these planes and this engine-prop combo, but beware of over-powering it.
+--><propeller x="-0.63" y="0" z="0.0" radius="1.108" cruise-speed="35" cruise-rpm="1170" cruise-alt="1000" cruise-power="30" takeoff-power="30" takeoff-rpm="1200" mass="135" moment="24"><actionpt x="-0.45" y="0" z="0.0"/><piston-engine eng-rpm="1200" eng-power="30" displacement="800.0" bore="4.93" stroke="6" compression="3.86"/><control-input axis="/controls/engines/engine[0]/throttle" control="THROTTLE"/><control-input axis="/controls/engines/engine[0]/starter" control="STARTER"/><control-input axis="/controls/engines/engine[0]/magnetos" control="MAGNETOS"/><control-input axis="/controls/engines/engine[0]/mixture" control="MIXTURE"/></propeller><!-- leftgears --><gear x="0.90" y="1.212" z="-1.649" compression="0.09"><control-input axis="/controls/gear/brake-parking" control="BRAKE" split="true"/></gear><!-- rightgears --><gear x="0.90" y="-1.212" z="-1.649" compression="0.09"><control-input axis="/controls/gear/brake-parking" control="BRAKE" split="true"/></gear><!-- tailwheel --><gear x="-4.89" y="0" z="-0.665" compression="0.02">
+  </gear><!-- fueltank --><tank x="0.39" y="0" z="0.213" capacity="162"/><!--
+Buck notes;
+Essentially I played with ballast to keep the CG slightly ahead of wing mid-chord. No idea where the true CG should be. -->
+
+<ballast x="4.0" y="0" z="-1.52" mass="220"/></airplane>
